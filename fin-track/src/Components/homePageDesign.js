@@ -135,9 +135,9 @@ function HomePageDesign() {
               <p className="card-text">
               Add your transactions by different types of category such as Food, Transport, etc.
               </p>
-            </div>
-          </div>
-        </div>
+            </div>           
+          </div>                
+        </div>          
         <div className="col" style={{ padding: '0 15px' }}>
           <div className="card" style={{ backgroundColor: '#fff', margin: '20px 0', boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)' }}>
             <img src={CardImage3} className="card-img-top" alt="..." />

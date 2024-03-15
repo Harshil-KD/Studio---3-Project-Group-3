@@ -1,9 +1,19 @@
-import React from 'react'
-import { Link } from 'react-router-dom'
-import VectorLogo from "../Images/Vector_Logo_White.png";
-import "../CSS/userNavbar.css"
+import React, { useState } from 'react';
+import { Link} from 'react-router-dom';
+import VectorLogo from '../Images/Vector_Logo_White.png';
+import '../CSS/userNavbar.css';
+import BecomePremiumModal from './BecomePremiumModal'; // Import the modal component
+
 
 function UserNavbar() {
+  const [showModal, setShowModal] = useState(false);
+  const history = useHistory();
+
+  const handleGoPremium = () => {
+    // Redirect user to payment page
+    history.push('/payment');
+  };
+
   return (
     <div>
       <nav className="navbar navbar-expand-lg bg-body-tertiary">
@@ -21,14 +31,14 @@ function UserNavbar() {
           </button>
 
           <Link to="/" className="navbar-brand">
-            <img src={VectorLogo} className="img-fluid" alt="brand-logo" />{" "}
-            FinTrack
+            <img src={VectorLogo} className="img-fluid" alt="brand-logo" /> FinTrack
           </Link>
 
           <div className="collapse navbar-collapse" id="navbarTogglerDemo03">
             <ul className="navbar-nav me-auto mb-2 mb-lg-0">
               <li className="nav-item">
-                <Link to="/userOverview" className="nav-link active" aria-current="page">
+                {/* Open modal on click */}
+                <Link to="#" className="nav-link active" aria-current="page" onClick={() => setShowModal(true)}>
                   Overview
                 </Link>
               </li>
@@ -50,14 +60,15 @@ function UserNavbar() {
               <Link to="/" className="btn custom-btn">
                 Log Out
               </Link>
-
-              
             </div>
           </div>
         </div>
       </nav>
+
+      {/* Render the modal component */}
+      <BecomePremiumModal showModal={showModal} setShowModal={setShowModal} handleGoPremium={handleGoPremium} />
     </div>
-  )
+  );
 }
 
 export default UserNavbar;
