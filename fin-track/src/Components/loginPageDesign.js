@@ -10,11 +10,9 @@ import {
 import { db } from "./Firebase/Firebase";
 import { getDocs, where, query, collection, addDoc } from "firebase/firestore";
 import "bootstrap/dist/css/bootstrap.min.css";
-import Navbar from "react-bootstrap/Navbar";
 import Container from "react-bootstrap/Container";
-
+import MainNavbar from "./mainNavbar";
 import "../CSS/loginPageDesign.css";
-import VectorLogo from "../Images/Vector_Logo.png";
 import loginBg from "../Images/login-bg.png";
 
 function LoginPageDesign() {
@@ -109,33 +107,7 @@ function LoginPageDesign() {
 
   return (
     <div>
-      <Navbar
-        style={{
-          backgroundColor: "#9600DC",
-          color: "white",
-          backgroundImage:
-            "linear-gradient(to right, #23102e, #432057, #9600DC, #9600DC, #9600DC, #9600DC)",
-        }}
-        variant="dark"
-        expand="lg"
-      >
-        <Container fluid className="forNavbar">
-          {/* Title Bar Design Logo*/}
-          <Navbar.Brand href="#">
-            <img
-              src={VectorLogo}
-              width="30"
-              height="30"
-              alt="Navbar Logo"
-              className="d-inline-block align-top"
-            />{" "}
-            FinTrack
-          </Navbar.Brand>
-
-          {/* TitleBar Toggler for mobile view */}
-          <Navbar.Toggle aria-controls="navbar-nav" />
-        </Container>
-      </Navbar>
+       <MainNavbar />
 
       {/* Welcome Container with TitleBar background color */}
       <Container
