@@ -12,11 +12,11 @@ import {
   orderBy,
   onSnapshot,
 } from "firebase/firestore";
-import { getDownloadURL, ref, uploadBytes } from "firebase/storage"; // Import necessary storage functions
+import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
 import { Tabs, Tab, FloatingLabel, Form, Button, Table } from "react-bootstrap";
+import "/OTAGO/YEAR 2 BLOCK 1/reactprojects/Studio---3-Project-Group-3/fin-track/src/CSS/UserSummaryPage.css";
 
 function UserSummaryTab() {
-  // State variables to store form data
   const [date, setDate] = useState("");
   const [account, setAccount] = useState("");
   const [accountId, setAccountId] = useState("");
@@ -27,10 +27,8 @@ function UserSummaryTab() {
   const [accountData, setAccountData] = useState([]);
   const [transactionsData, setTransactionsData] = useState([]);
   const [loading, setLoading] = useState(true);
-
   const { userId } = useUserId();
 
-  // Function to generate a random alphanumeric string of given length
   function generateId(length) {
     const characters =
       "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
@@ -46,20 +44,20 @@ function UserSummaryTab() {
   useEffect(() => {
     const fetchAccounts = async () => {
       try {
-        const userDocRef = doc(db, "users", userId); // Reference to the user document
-        const accountsCollectionRef = collection(userDocRef, "accounts"); // Reference to the accounts subcollection
-        const snapshot = await getDocs(accountsCollectionRef); // Get all documents from the accounts subcollection
+        const userDocRef = doc(db, "users", userId);
+        const accountsCollectionRef = collection(userDocRef, "accounts");
+        const snapshot = await getDocs(accountsCollectionRef);
 
         const accountsData = snapshot.docs.map((doc) => ({
           id: doc.id,
           ...doc.data(),
         }));
-        console.log("Fetched accounts data:", accountsData); // Added console log
+        console.log("Fetched accounts data:", accountsData);
         setAccountData(accountsData);
       } catch (error) {
         console.error("Error fetching accounts:", error);
       } finally {
-        setLoading(false); // Moved setLoading inside the try block
+        setLoading(false);
       }
     };
 
@@ -94,6 +92,8 @@ function UserSummaryTab() {
 
       const accountsRef = doc(db, "users", userId, "accounts", accountId);
       const transactionsCollectionRef = collection(accountsRef, "transactions");
+      const accountsRef = doc(db, "users", userId, "accounts", accountId);
+      const transactionsCollectionRef = collection(accountsRef, "transactions");
       await setDoc(doc(transactionsCollectionRef, transactionId), {
         userId,
         date,
@@ -101,6 +101,7 @@ function UserSummaryTab() {
         category,
         amount,
         description,
+        imageUrl,
         imageUrl,
       });
 
@@ -138,6 +139,7 @@ function UserSummaryTab() {
 
           const transactionsQuery = query(
             transactionsCollectionRef,
+            orderBy("date", "desc")
             orderBy("date", "desc")
           );
 
@@ -274,6 +276,30 @@ function UserSummaryTab() {
           ))}
         </Tab>
 
+          {Object.entries(transactionsData).map(([date, transactions]) => (
+            <div key={date}>
+              <h3>{date}</h3>
+              <Table striped bordered hover>
+                <thead>
+                  <tr>
+                    <th>Account Name</th>
+                    <th>Category</th>
+                    <th>Amount</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {transactions.map((transaction) => (
+                    <tr key={transaction.id}>
+                      <td>{transaction.accountName}</td>
+                      <td>{transaction.category}</td>
+                      <td>{transaction.amount}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </Table>
+            </div>
+          ))}
+        </Tab>
         <Tab eventKey="expense" title="Expense">
         <Form onSubmit={(event) => handleFormSubmit(event, "expense")}>
             <FloatingLabel controlId="date" label="Date">
@@ -333,7 +359,7 @@ function UserSummaryTab() {
           </Form>
         </Tab>
       </Tabs>
-    </>
+    </div>
   );
 }
 
