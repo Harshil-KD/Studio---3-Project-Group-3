@@ -5,6 +5,7 @@ import { useUserId } from "./Firebase/UserContext";
 import {
   doSignInUserWithEmailAndPassword,
   doSignInWithGoogle,
+  checkUserExists,
 } from "./Firebase/Auth"; // Adjust the import path as necessary
 import { db } from "./Firebase/Firebase";
 import { getDocs, where, query, collection, addDoc } from "firebase/firestore";
@@ -62,6 +63,7 @@ function LoginPageDesign() {
     }
   };
 
+
   const onGoogleSignIn = async (e) => {
     e.preventDefault();
     setIsSigningIn(true);
@@ -102,6 +104,8 @@ function LoginPageDesign() {
       setIsSigningIn(false);
     }
   };
+
+
 
   return (
     <div>
